@@ -2,7 +2,7 @@ import os
 import datetime
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
-from peewee import CharField, TextField, DateTimeField, MySQLDatabase, DoesNotExist, Model
+from peewee import CharField, TextField, DateTimeField, MySQLDatabase, DoesNotExist, Model, SqliteDatabase
 from playhouse.shortcuts import model_to_dict
 
 load_dotenv()
@@ -10,7 +10,18 @@ app = Flask(__name__)
 
 base_url = "/"
 
-mydb = MySQLDatabase(
+# mydb = MySQLDatabase(
+#     os.getenv("MYSQL_DATABASE"),
+#     user=os.getenv("MYSQL_USER"),
+#     password=os.getenv("MYSQL_PASSWORD"),
+#     host=os.getenv("MYSQL_HOST"),
+#     port=3306
+# )
+if os.getenv("TESTING") == 'true':
+    print("Running in test mode, using SQLite in-memory database")
+    mydb = SqliteDatabase('file:memory?mode=memory&cache=shared', uri=True)
+else:
+    mydb = MySQLDatabase(
     os.getenv("MYSQL_DATABASE"),
     user=os.getenv("MYSQL_USER"),
     password=os.getenv("MYSQL_PASSWORD"),
@@ -22,7 +33,10 @@ class BaseModel(Model):
     class Meta:
         database = mydb
 
+from peewee import AutoField
+
 class TimelinePost(BaseModel):
+    id = AutoField()
     name = CharField()
     email = CharField()
     content = TextField()
@@ -191,6 +205,18 @@ def timeline_post():
     name = request.form.get('name')
     email = request.form.get('email')
     content = request.form.get('content')
+    
+    # Validate input
+    if not name or name.strip() == '':
+        return 'Invalid name', 400
+    
+    if not content or content.strip() == '':
+        return 'Invalid content', 400
+    
+    # Basic email validation
+    if not email or '@' not in email or '.' not in email.split('@')[-1]:
+        return 'Invalid email', 400
+    
     timeline_post = TimelinePost.create(name=name, email=email, content=content)
 
     return model_to_dict(timeline_post)
@@ -215,7 +241,7 @@ def delete_timeline_post(post_id):
             'deleted_id': post_id
         }, 200
 
-    except TimelinePost.DoesNotExist:
+    except DoesNotExist:
         return {
             'error': f'Timeline post with ID {post_id} not found'
         }, 404
