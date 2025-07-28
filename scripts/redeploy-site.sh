@@ -1,20 +1,19 @@
 #!/bin/bash
 
-LOGFILE="errors/\$(date +\'%Y-%m-%d_%H-%M-%S\')"
+LOGDIR="/root/flask-portfolio/errors"
+mkdir -p "$LOGDIR"
+LOGFILE="$LOGDIR/$(date +'%Y-%m-%d_%H-%M-%S').log"
 
 echo "Going to project directory..."
-cd ~/flask-portfolio
+cd ~/flask-portfolio || exit 1
 
-echo "Pulling latest code from GitHub..."
-git fetch && git reset origin/main --hard
+# echo "Pulling latest code from GitHub..."
+# git fetch && git reset origin/main --hard
 
-echo "Activating virtual environment..."
-source python3-virtualenv/bin/activate
+echo "Bringing down existing containers..."
+docker compose -f docker-compose.prod.yml down 2>> "$LOGFILE"
 
-echo "Installing dependencies..."
-pip install -r requirements.txt
-
-echo "Restarting myportfolio service..."
-sudo systemctl restart myportfolio 2>> $LOGFILE
+echo "Rebuilding and restarting containers..."
+docker compose -f docker-compose.prod.yml up -d --build 2>> "$LOGFILE"
 
 echo "Site redeployed successfully!"

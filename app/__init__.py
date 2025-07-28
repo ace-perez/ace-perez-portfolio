@@ -1,5 +1,6 @@
 import os
 import datetime
+import time
 from flask import Flask, render_template, request
 from dotenv import load_dotenv
 from peewee import CharField, TextField, DateTimeField, MySQLDatabase, DoesNotExist, Model, SqliteDatabase
@@ -42,8 +43,19 @@ class TimelinePost(BaseModel):
     content = TextField()
     created_at = DateTimeField(default=datetime.datetime.now)
 
+MAX_RETRIES = 10
+for attempt in range(MAX_RETRIES):
+    try:
+        mydb.connect()
+        print("Connected to database.")
+        break
+    except Exception as e:
+        print(f"DB connection failed (attempt {attempt + 1}/{MAX_RETRIES}): {e}")
+        time.sleep(2)
+else:
+    print("Could not connect to database after retries. Exiting.")
+    exit(1)
 
-mydb.connect()
 mydb.create_tables([TimelinePost])
 
 navigation_items = [
