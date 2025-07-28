@@ -1,33 +1,35 @@
-version: "3"
-services:
-  myportfolio:
-    build: .
-    restart: always
-    env_file: .env
-    depends_on:
-      - mysql
+version: "3.8"
 
+services:
   mysql:
     image: mariadb
     restart: always
     env_file: .env
     volumes:
       - mydatabase:/var/lib/mysql
-    
-nginx:
+
+  myportfolio:
+    image: flask-portfolio-myportfolio
+    depends_on:
+      - mysql
+    expose:
+      - "5001"
+    command: python3 -m app
+
+  nginx:
     image: jonasal/nginx-certbot:latest
     restart: always
     environment:
-      CERTBOT_EMAIL: aceleagueoflegends@gmail.com 
-      NGINX_SERVER_NAME: ace-perez-portfolio.duckdns.org  # ✅ Your domain
+      CERTBOT_EMAIL: aceleagueoflegends@gmail.com
+      NGINX_SERVER_NAME: ace-perez-portfolio.duckdns.org
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - nginx_secrets:/etc/letsencrypt
-      - ./user_conf.d:/etc/nginx/user_conf.d     
-
+      - ./user_conf.d:/etc/nginx/user_conf.d
 
 volumes:
   mydatabase:
-  nginx_secrets: 
+  nginx_secrets:
+

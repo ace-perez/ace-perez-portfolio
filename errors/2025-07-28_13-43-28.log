@@ -1,0 +1,2 @@
+validating /root/flask-portfolio/docker-compose.prod.yml:  additional properties 'nginx' not allowed
+validating /root/flask-portfolio/docker-compose.prod.yml:  additional properties 'nginx' not allowed
