@@ -80,8 +80,8 @@ def get_navigation(current_page):
 # Data structures for dynamic content
 work_experiences = [
     {
-        'title': 'Senior Software Developer',
-        'company': 'TechCorp Solutions',
+        'title': 'Production Engineer',
+        'company': 'Test Company',
         'duration': 'January 2020 - Present',
         'achievements': [
             'Led the development of cloud-native applications using AWS services, resulting in 40% improved scalability',
