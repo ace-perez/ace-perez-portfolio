@@ -9,7 +9,7 @@ services:
       - mydatabase:/var/lib/mysql
 
   myportfolio:
-    image: flask-portfolio-myportfolio
+    build: .
     depends_on:
       - mysql
     expose:
@@ -32,4 +32,3 @@ services:
 volumes:
   mydatabase:
   nginx_secrets:
-
