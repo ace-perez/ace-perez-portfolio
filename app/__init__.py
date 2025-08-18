@@ -90,7 +90,7 @@ work_experiences = [
         ]
     },
     {
-        'title': 'Production Engineer',
+        'title': 'Test Engineer',
         'company': 'DataTech Systems',
         'duration': 'June 2017 - December 2019',
         'achievements': [
