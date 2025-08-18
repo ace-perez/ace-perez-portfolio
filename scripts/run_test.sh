@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 -m unittest discover -v tests/
+python3 -m unittest discover -v app/tests/
