@@ -268,5 +268,9 @@ def timeline_page():
                          title="Timeline",
                         navigation=get_navigation('/timeline'),)
 
+@app.route('/test-deployment')
+def test_deployment():
+    return '<h1> Deployment Test Successful!</h1><p>This page was added to test automatic deployment.</p>'
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001, host='0.0.0.0')
