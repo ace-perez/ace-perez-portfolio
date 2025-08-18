@@ -93,3 +93,15 @@ Thanks to the following fellows for their contributions to the portfolio project
 - Embedded a map of all visited locations/countries
 - Wrote and updated this README
 
+## Automated Testing
+
+This project uses GitHub Actions for continuous integration. Every push to the main branch and every pull request automatically triggers our test suite to ensure code quality.
+
+### Workflow Features:
+- Runs on Ubuntu latest
+- Sets up Python 3.13 virtual environment
+- Installs project dependencies
+- Executes test suite using `run_test.sh`
+- Provides immediate feedback on code changes
+
+The workflow configuration can be found in `.github/workflows/test.yml`.
