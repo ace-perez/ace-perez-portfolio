@@ -26,4 +26,4 @@ jobs:
           END
 
       - name: Deploy site
-        run: ssh my-vps "cd ${{ secrets.PROJECT_ROOT }} && ~/redeploy-site.sh"
+        run: ssh my-vps "cd ${{ secrets.PROJECT_ROOT }} && ./scripts/redeploy_site.sh"
