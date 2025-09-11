@@ -1,11 +1,11 @@
 #!/bin/bash
 
-LOGDIR="/root/flask-portfolio/errors"
+LOGDIR="/root/ace-perez-portfolio/errors"
 mkdir -p "$LOGDIR"
 LOGFILE="$LOGDIR/$(date +'%Y-%m-%d_%H-%M-%S').log"
 
 echo "Going to project directory..."
-cd ~/flask-portfolio || exit 1
+cd ~/ace-perez-portfolio || exit 1
 
 echo "Pulling latest code from GitHub..."
 git fetch && git reset origin/main --hard
