@@ -1,6 +1,7 @@
 #!/bin/bash
 
-LOGDIR="/root/ace-perez-portfolio/errors"
+# Use the current user's home directory instead of /root
+LOGDIR="$HOME/ace-perez-portfolio/errors"
 mkdir -p "$LOGDIR"
 LOGFILE="$LOGDIR/$(date +'%Y-%m-%d_%H-%M-%S').log"
 
