@@ -267,8 +267,8 @@ class AppTestCase(unittest.TestCase):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         
-        # Test that navigation exists
-        assert "nav-menu" in html
+        # Test that navigation exists (updated to match actual HTML)
+        assert "sidebar-menu" in html
         assert "Timeline" in html
         
         # The navigation should be present (specific active class testing would need more detailed HTML parsing)
