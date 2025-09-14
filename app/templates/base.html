@@ -34,29 +34,53 @@
 </head>
 
 <body>
-    <header class="nav-bar">
-        <div class="nav-content">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
             <a href="/">
                 <div class="nav-logo">
                     <img src="/static/img/logo.svg" />
                 </div>
             </a>
-            <nav class="nav-menu">
-                {% for nav_item in navigation %}
-                    <a href="{{ nav_item.url }}" class="nav-link {% if nav_item.active %}active{% endif %}">
-                        {{ nav_item.name }}
-                    </a>
-                {% endfor %}
-            </nav>
         </div>
-    </header>
+        <nav class="sidebar-menu">
+            {% for nav_item in navigation %}
+                <a href="{{ nav_item.url }}" class="sidebar-link {% if nav_item.active %}active{% endif %}">
+                    {{ nav_item.name }}
+                </a>
+            {% endfor %}
+        </nav>
+    </aside>
 
-    {% block profile %}{% endblock %}
-
-    {% block content %}{% endblock %}
+    <!-- Main Content Area -->
+    <main class="main-content">
+        {% block profile %}{% endblock %}
+        {% block content %}{% endblock %}
+    </main>
 
     {% block extra_scripts %}{% endblock %}
 
+    <!-- Add this before closing </body> tag -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+
+    <script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('mobile-open');
+    }
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.sidebar');
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        
+        if (window.innerWidth <= 768 && 
+            !sidebar.contains(event.target) && 
+            !menuBtn.contains(event.target)) {
+            sidebar.classList.remove('mobile-open');
+        }
+    });
+    </script>
 </body>
 
 </html>
