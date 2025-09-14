@@ -1,0 +1,2 @@
+scripts/redeploy-site.sh: line 15: docker: command not found
+scripts/redeploy-site.sh: line 18: docker: command not found
