@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mysql:
-    image: mariadb
+    image: docker.io/mariadb:latest
     restart: always
     env_file: .env
     volumes:
@@ -15,19 +15,22 @@ services:
     expose:
       - "5001"
     command: python3 -m app
+    env_file: .env
 
   nginx:
-    image: jonasal/nginx-certbot:latest
+    image: docker.io/jonasal/nginx-certbot:latest
     restart: always
     environment:
       CERTBOT_EMAIL: aceleagueoflegends@gmail.com
-      NGINX_SERVER_NAME: ace-perez-portfolio.duckdns.org
+      NGINX_SERVER_NAME: ace-perez-portfolio.dev
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - nginx_secrets:/etc/letsencrypt
       - ./user_conf.d:/etc/nginx/user_conf.d
+    depends_on:
+      - myportfolio
 
 volumes:
   mydatabase:
