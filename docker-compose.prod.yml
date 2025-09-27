@@ -22,7 +22,7 @@ services:
     restart: always
     environment:
       CERTBOT_EMAIL: aceleagueoflegends@gmail.com
-      NGINX_SERVER_NAME: ace-perez-portfolio.duckdns.org
+      NGINX_SERVER_NAME: https://ace-perez-portfolio.dev/
     ports:
       - "8080:80"
       - "8443:443"
