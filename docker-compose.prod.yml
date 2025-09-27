@@ -22,10 +22,10 @@ services:
     restart: always
     environment:
       CERTBOT_EMAIL: aceleagueoflegends@gmail.com
-      NGINX_SERVER_NAME: ace-perez-portfolio.dev
+      NGINX_SERVER_NAME: ace-perez-portfolio.duckdns.org
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      - "8443:443"
     volumes:
       - nginx_secrets:/etc/letsencrypt
       - ./user_conf.d:/etc/nginx/user_conf.d
