@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mysql:
-    image: docker.io/mariadb:latest
+    image: mysql:8.0  # Changed from mariadb:latest
     restart: always
     env_file: .env
     volumes:
