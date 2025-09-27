@@ -646,15 +646,15 @@ body {
     .sidebar {
         transform: translateX(-100%);
     }
-    
+
     .sidebar.mobile-open {
         transform: translateX(0);
     }
-    
+
     .main-content {
         margin-left: 0;
     }
-    
+
     /* Add a mobile menu button */
     .mobile-menu-btn {
         position: fixed;
@@ -683,3 +683,41 @@ body {
     // old styles here
 }
 */
+/* Add this to your existing CSS - Scribbling Color to B&W Effect */
+
+/* Realistic scribbling effect with dots - NO outlines */
+
+/* Remove all shadows and outlines from profile image */
+
+.profile-picture img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    
+    /* Start in full color */
+    filter: grayscale(0) contrast(1.1) brightness(1.05);
+    
+    /* Smooth transition for the scribbling effect */
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* REMOVE ALL SHADOWS - this might be causing the whitespace */
+    box-shadow: none;
+    
+    /* Gentle floating */
+    animation: gentleFloat 4s ease-in-out infinite;
+    
+    position: relative;
+}
+
+.profile-picture img:hover {
+    /* Transform to black and white */
+    filter: grayscale(1) contrast(1.4) brightness(0.85);
+    
+    /* NO shadows at all */
+    box-shadow: none;
+    
+    /* Slight zoom */
+    transform: scale(1.03);
+}
