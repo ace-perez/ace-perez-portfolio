@@ -58,8 +58,8 @@ body {
 
 .nav-logo {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
 .nav-logo img {
@@ -596,15 +596,55 @@ body {
     transition: transform 0.3s ease;
 }
 
-.sidebar-header {
-    padding: 20px;
-    border-bottom: 1px solid #34495e;
-    text-align: center;
-}
+/* Make the goose logo BIGGER in sidebar - targeting correct selector */
 
 .sidebar-header .nav-logo img {
-    max-width: 120px;
-    height: auto;
+    width: 200px !important;  /* Force it to be big with !important */
+    height: 200px !important; /* Keep it square */
+    object-fit: contain; /* Preserve aspect ratio */
+    max-width: none !important; /* Override any max-width constraints */
+    max-height: none !important; /* Override any max-height constraints */
+}
+
+/* Create clear separation between logo and menu */
+.sidebar-header {
+    padding: 10px !important; /* Consistent padding around logo */
+    text-align: center;
+    margin-bottom: 0 !important; /* No bottom margin */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Very subtle boundary line */
+}
+
+.sidebar-header .nav-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* No padding around logo itself */
+    margin: 0; /* No margin around logo */
+}
+
+/* Optional: Add hover effect */
+.sidebar-header .nav-logo img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Create clear boundary for the menu - this should fix the Home spacing */
+.sidebar-menu {
+    margin: 0 !important; /* Reset any margin that might affect spacing */
+    padding: 0 !important; /* Reset any padding that might affect spacing */
+}
+
+/* Now all sidebar links (including Home) should have equal spacing */
+.sidebar-menu .sidebar-link {
+    display: block;
+    padding: 15px 20px !important; /* Equal padding for all menu items */
+    margin: 0 !important; /* No margin to avoid spacing issues */
+}
+
+/* Remove any special treatment for first child */
+.sidebar-menu .sidebar-link:first-child {
+    padding: 15px 20px !important; /* Same as all others */
+    margin: 0 !important; /* No special margin */
 }
 
 .sidebar-menu {
@@ -720,4 +760,94 @@ body {
     
     /* Slight zoom */
     transform: scale(1.03);
+}
+/* Make the goose logo bigger in sidebar */
+
+.nav-logo img {
+    width: 60px;  /* Increase from current size */
+    height: 60px; /* Keep it square */
+    object-fit: contain; /* Preserve aspect ratio */
+}
+
+/* Optional: Add some hover effect to make it interactive */
+.nav-logo img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Make sure the nav-logo container can handle the bigger size */
+.nav-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+/* Make the goose logo bigger in sidebar */
+
+.nav-logo img {
+    width: 100px;  /* Much bigger! */
+    height: 100px; /* Keep it square */
+    object-fit: contain; /* Preserve aspect ratio */
+}
+
+/* Optional: Add some hover effect */
+.nav-logo img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Make sure the nav-logo container can handle the bigger size */
+.nav-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px; /* More padding for bigger logo */
+}
+/* Make the goose logo EVEN BIGGER in sidebar */
+
+.nav-logo img {
+    width: 140px;  /* Really big now! */
+    height: 140px; /* Keep it square */
+    object-fit: contain; /* Preserve aspect ratio */
+}
+
+/* Optional: Add some hover effect */
+.nav-logo img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Make sure the nav-logo container can handle the bigger size */
+.nav-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Extra padding for the bigger logo */
+}
+/* Make the goose logo BIGGER in sidebar - targeting correct selector */
+
+.sidebar-header .nav-logo img {
+    width: 200px !important;  /* Force it to be big with !important */
+    height: 200px !important; /* Keep it square */
+    object-fit: contain; /* Preserve aspect ratio */
+    max-width: none !important; /* Override any max-width constraints */
+    max-height: none !important; /* Override any max-height constraints */
+}
+
+/* Optional: Add hover effect */
+.sidebar-header .nav-logo img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Remove any spacing on the sidebar menu */
+.sidebar-menu {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Make sure first menu item is right up against the logo */
+.sidebar-menu .sidebar-link:first-child {
+    margin-top: 0 !important;
+    padding-top: 10px !important;
 }
