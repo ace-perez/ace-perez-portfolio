@@ -1,0 +1,5 @@
+scripts/redeploy-site.sh: line 16: docker: command not found
+From github.com:ace-perez/ace-perez-portfolio
+ * branch            main       -> FETCH_HEAD
+HEAD is now at aad1836 fixed re-deploy script
+scripts/redeploy-site.sh: line 29: docker: command not found
