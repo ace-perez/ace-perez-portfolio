@@ -36,6 +36,7 @@ services:
       - "443:443"
     volumes:
       - nginx_secrets:/etc/letsencrypt
+      - nginx_certbot_www:/var/www/certbot
       - ./user_conf.d:/etc/nginx/user_conf.d
     depends_on:
       - myportfolio
@@ -43,3 +44,4 @@ services:
 volumes:
   mydatabase:
   nginx_secrets:
+  nginx_certbot_www:
