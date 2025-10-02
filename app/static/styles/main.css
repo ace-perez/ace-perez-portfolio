@@ -1,3 +1,4 @@
+```css
 p,
 h1,
 h2,
@@ -647,6 +648,79 @@ body {
     margin: 0 !important; /* No special margin */
 }
 
+/* Profile picture - FORCE to bottom with negative margins */
+.profile, 
+#profile,
+div.profile,
+div#profile {
+    position: relative !important;
+    padding: 0 !important;
+    padding-right: 30px !important; /* Space from right edge */
+    margin: 0 !important;
+    height: 150px !important;
+    overflow: hidden !important;
+    display: block !important;
+    text-align: right !important; /* Right align content */
+    box-sizing: border-box !important;
+}
+
+.profile-picture, 
+#profile-picture,
+div.profile-picture,
+div#profile-picture {
+    display: inline-block !important;
+    margin: 0 !important;
+    margin-top: 0 !important; /* Force to bottom by eliminating top margin */
+    padding: 0 !important;
+    line-height: 0 !important;
+    font-size: 0 !important;
+    vertical-align: bottom !important;
+    position: relative !important;
+    top: 0 !important; /* Reset any top positioning */
+}
+
+/* FORCE image to bottom edge using negative margins */
+.profile img,
+#profile img,
+.profile-picture img,
+#profile-picture img,
+div.profile img,
+div#profile img,
+div.profile-picture img,
+div#profile-picture img {
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    border: 0 !important;
+    border: none !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    outline: 0 !important;
+    outline: none !important;
+    outline-width: 0 !important;
+    outline-style: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    border-radius: 0 !important;
+    display: block !important;
+    margin: 0 !important;
+    margin-top: 0 !important; /* Force to bottom */
+    margin-bottom: 0 !important; /* Touch bottom edge */
+    padding: 0 !important;
+    vertical-align: bottom !important;
+    position: relative !important;
+    top: 0 !important; /* NO vertical offset */
+    transform: translateY(0) !important; /* NO transform offset */
+    max-width: none !important;
+    max-height: none !important;
+    min-width: 150px !important;
+    min-height: 150px !important;
+    float: none !important;
+}
+
 .sidebar-menu {
     padding: 20px 0;
 }
@@ -803,7 +877,7 @@ body {
     align-items: center;
     padding: 15px; /* More padding for bigger logo */
 }
-/* Make the goose logo EVEN BIGGER in sidebar */
+/* Make the goose logo bigger in sidebar */
 
 .nav-logo img {
     width: 140px;  /* Really big now! */
@@ -851,3 +925,104 @@ body {
     margin-top: 0 !important;
     padding-top: 10px !important;
 }
+/* Make the goose logo BIGGER in sidebar - targeting correct selector */
+
+.sidebar-header .nav-logo img {
+    width: 200px !important;  /* Force it to be big with !important */
+    height: 200px !important; /* Keep it square */
+    object-fit: contain; /* Preserve aspect ratio */
+    max-width: none !important; /* Override any max-width constraints */
+    max-height: none !important; /* Override any max-height constraints */
+}
+
+/* Create clear separation between logo and menu */
+.sidebar-header {
+    padding: 10px !important; /* Consistent padding around logo */
+    text-align: center;
+    margin-bottom: 0 !important; /* No bottom margin */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Very subtle boundary line */
+}
+
+.sidebar-header .nav-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* No padding around logo itself */
+    margin: 0; /* No margin around logo */
+}
+
+/* Optional: Add hover effect */
+.sidebar-header .nav-logo img:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Create clear boundary for the menu - this should fix the Home spacing */
+.sidebar-menu {
+    margin: 0 !important; /* Reset any margin that might affect spacing */
+    padding: 0 !important; /* Reset any padding that might affect spacing */
+}
+
+/* Now all sidebar links (including Home) should have equal spacing */
+.sidebar-menu .sidebar-link {
+    display: block;
+    padding: 15px 20px !important; /* Equal padding for all menu items */
+    margin: 0 !important; /* No margin to avoid spacing issues */
+}
+
+/* Remove any special treatment for first child */
+.sidebar-menu .sidebar-link:first-child {
+    padding: 15px 20px !important; /* Same as all others */
+    margin: 0 !important; /* No special margin */
+}
+
+/* Profile picture - FORCE to bottom with negative margins */
+.profile, 
+#profile,
+div.profile,
+div#profile {
+    position: relative !important;
+    padding: 0 !important;
+    padding-right: 30px !important; /* Space from right edge */
+    margin: 0 !important;
+    height: 150px !important;
+    overflow: hidden !important;
+    display: block !important;
+    text-align: right !important; /* Right align content */
+    box-sizing: border-box !important;
+}
+
+.profile-picture, 
+#profile-picture,
+div.profile-picture,
+div#profile-picture {
+    display: inline-block !important;
+    margin: 0 !important;
+    margin-top: 0 !important; /* Force to bottom by eliminating top margin */
+    padding: 0 !important;
+    line-height: 0 !important;
+    font-size: 0 !important;
+    vertical-align: bottom !important;
+    position: relative !important;
+    top: 0 !important; /* Reset any top positioning */
+}
+
+/* FORCE image to bottom edge using negative margins */
+.profile img,
+#profile img,
+.profile-picture img,
+#profile-picture img,
+div.profile img,
+div#profile img,
+div.profile-picture img,
+div#profile-picture img {
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    border: 0 !important;
+    border: none !important;
+    border-width: 0 !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    outline:
