@@ -80,23 +80,38 @@ def get_navigation(current_page):
 # Data structures for dynamic content
 work_experiences = [
     {
-        'title': 'Production Engineer',
-        'company': 'Test Company',
-        'duration': 'January 2020 - Present',
+        'title': 'Site Reliability Engineer/Production Engineer Fellow',
+        'company': 'Meta & MLH',
+        'duration': 'June 2025 - September 2025',
         'achievements': [
-            'Led the development of cloud-native applications using AWS services, resulting in 40% improved scalability',
-            'Implemented CI/CD pipelines using GitHub Actions and AWS CodePipeline',
-            'Mentored junior developers and conducted code reviews to maintain high code quality'
+            'Selected as part of the first EU cohort of the MLH Production Engineering Fellowship (highly selective, < 3% acceptance), mentored by Meta’s Dublin Production Engineering team.',
+            'Built strong foundations in troubleshooting, monitoring, and debugging systems, with hands-on experience in services, databases, networking, and Linux internals.',
+            'Implemented production engineering practices including CI/CD pipelines, automated testing, containers, and Bash scripting to improve system reliability and deployment workflows.'
+            'Delivered a Linux-focused portfolio website integrating monitoring, services, and system administration concepts.',
+            ' Helped organize and led the first-ever MLH cohort visit to a Meta office, fostering knowledge-sharing and collaboration between fellows and Meta engineers.'
         ]
     },
     {
-        'title': 'Test Engineer',
-        'company': 'DataTech Systems',
-        'duration': 'June 2017 - December 2019',
+        'title': 'Cloud Support Engineer I (Data Analytics) ',
+        'company': 'Amazon Web Services',
+        'duration': 'September 2023 - May 2025',
         'achievements': [
-            'Developed and maintained data analytics platforms serving over 100,000 users',
-            'Optimized database queries resulting in 60% faster response times',
-            'Collaborated with cross-functional teams to deliver features on schedule'
+            'Improved data management and processing workflows for leading international corporations by implementing scalable, cloud-based data analytics solutions through AWS',
+            'Consulted on system design and optimization, deploying AWS analytics services such as OpenSearch (Elasticsearch) and Apache Kafka to streamline data pipelines and meet complex client needs',
+            'Developed efficient data processing and analysis workflows using Python, enabling advanced data visualization and actionable insights',
+            'Engineered seamless integration of Apache Kafka with external systems like Prometheus and Logstash, enhancing system functionality, scalability, and performance through robust software solutions',
+            'Collaborated with engineering teams to deliver specialized software solutions and innovative problem solving strategies for clients including Deloitte and JP Morgan',
+            'Coordinated effectively with internal cross-functional teams within an Agile environment, ensuring the timely and efficient delivery of software solutions and actively participating in team meetings and project management'
+        ]
+    },
+    {
+        'title': 'Cloud Support Associate Intern (Data Analytics)',
+        'company': 'Amazon Web Services',
+        'duration': 'January 2022 - September 2022',
+        'achievements': [
+            'Addressed technical challenges in cloud infrastructure and coding, enhancing project efficiency and system stability.',
+            'Applied Linux expertise to strengthen team capabilities and guided clients on optimized cloud analytics.',
+            'Fostered collaboration through active participation in team meetings and activities, improving technical skills in Linux and Data Analytics.',
         ]
     }
 ]
@@ -104,23 +119,14 @@ work_experiences = [
 # Education data structure - will be populated by other team members
 education = [
     {
-        "degree": "Master of Science in Software Engineering",
-        "school": "University of Technology",
-        "duration": "August 2077 - May 2077",
+        "degree": "Bachelors(Honors) in Computer Science",
+        "school": "Technological University Dublin",
+        "grade": "Second Class Honours, First Division (II.1)",
+        "duration": "August 2019 - August 2023",
         "achievements": [
-            "Specialized in Cloud Computing and Distributed Systems",
-            "Thesis: 'Optimizing Cloud-Based Data Processing for Large-Scale Applications'",
-            "Participated in various hackathons and coding competitions"
-        ]
-    },
-    {
-        "degree": "Bachelor of Science in Computer Science",
-        "school": "Tech University",
-        "duration": "August 1337 - May 1337",
-        "achievements": [
-            "Graduated with Honors",
-            "Relevant Coursework: Data Structures, Algorithms, Database Systems, Cloud Computing",
-            "Capstone Project: Developed a cloud-based application for real-time data analytics"
+            "Wells for Zoe award",
+            "AWS Campus Ambassador",
+            "Thesis: 'Remote Tracking of Medicine Intake using NFC'"
         ]
     }
 ]
