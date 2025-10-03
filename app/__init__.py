@@ -135,46 +135,37 @@ hobbies = [
         'name': 'Photography',
         'description': 'Passionate about capturing moments and exploring different perspectives through the lens.',
         'details': 'I specialize in landscape and street photography. My favorite time to shoot is during golden hour, and I love experimenting with long exposure techniques.',
-        'icon_color': '#1C539F'
+        'icon_color': '#B2C294'
     },
     {
         'name': 'Hiking',
         'description': 'Love exploring nature trails and challenging myself with different terrains.',
         'details': 'I regularly explore local trails and have completed several challenging mountain hikes. My goal is to hike at least one new trail every month.',
-        'icon_color': '#d4851a'
+        'icon_color': '#ff8f57'
     },
     {
         'name': 'Open Source',
         'description': 'Contributing to open source projects and building side projects.',
         'details': 'I actively contribute to various open source projects, mainly focusing on Python and JavaScript libraries. I believe in the power of community-driven development.',
-        'icon_color': '#0c59ff'
+        'icon_color': '#B2C294'
     }
 ]
 visited_locations = [
     {
         "name": "Paris, France",
         "coords": [48.8566, 2.3522],
-        "description": "Visited the Eiffel Tower and Louvre Museum"
     },
     {
-        "name": "Tokyo, Japan",
-        "coords": [35.6762, 139.6503],
-        "description": "Explored Shibuya and enjoyed authentic sushi"
+        "name": "Marseille, France",
+        "coords": [43.2964, 5.3522],
     },
     {
         "name": "New York, USA",
         "coords": [40.7128, -74.0060],
-        "description": "Saw Times Square and Central Park"
     },
     {
         "name": "Sydney, Australia",
         "coords": [-33.8688, 151.2093],
-        "description": "Visited the Opera House and Bondi Beach"
-    },
-    {
-        "name": "Bermuda Triangle",
-        "coords": [25.0000, -71.0000],
-        "description": "Met some aliens and they were friendly! They even gave me a ride in their spaceship."
     }
 ]
 
