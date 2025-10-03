@@ -76,7 +76,7 @@
 </section>
 
 <!-- Hobbies -->
-<section class="hero2">
+<section class="hero">
     <div class="hero-text">
         <div class="about2 hobbies-section">
             <h2>Hobbies & Interests</h2>
@@ -137,25 +137,65 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const locations = {{ visited_locations|tojson|safe }};
 
-    locations.forEach(location => {
-        const marker = L.marker(location.coords).addTo(map)
-            .bindTooltip(
-                `<strong>${location.name}</strong>`,
-                {
-                    permanent: true,
-                    direction: 'top',
-                    offset: [0, -20],
-                    className: 'custom-tooltip'
-                }
-            );
-
+    locations.forEach((location, index) => {
+        // Create the main marker (red pin)
+        const marker = L.marker(location.coords).addTo(map);
+        
+        // Create an invisible larger circle for better hover detection
+        const hoverArea = L.circle(location.coords, {
+            radius: 30000, // 30km radius for hover detection
+            opacity: 0,
+            fillOpacity: 0,
+            interactive: true,
+            className: `hover-area-${index}` // Unique class for each circle
+        }).addTo(map);
+        
+        // Custom marker with better styling
         marker.setIcon(
             L.icon({
-                iconUrl: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',
-                iconSize: [32, 32],
-                iconAnchor: [16, 32]
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41],
+                className: 'location-marker'
             })
         );
+
+        // Create tooltip only on the marker (not the hover area)
+        const tooltip = marker.bindTooltip(
+            `${location.name}`,
+            {
+                permanent: false,
+                direction: 'top',
+                offset: [0, -45],
+                className: 'custom-tooltip',
+                interactive: false,
+                opacity: 0.95
+            }
+        );
+
+        // Add popup for click
+        marker.bindPopup(`<strong>${location.name}</strong>`);
+
+        // Handle hover events properly
+        hoverArea.on('mouseover', () => {
+            marker.openTooltip();
+        });
+
+        hoverArea.on('mouseout', () => {
+            marker.closeTooltip();
+        });
+
+        // Also handle marker hover (for when user hovers directly on pin)
+        marker.on('mouseover', () => {
+            marker.openTooltip();
+        });
+
+        marker.on('mouseout', () => {
+            marker.closeTooltip();
+        });
     });
 });
 </script>

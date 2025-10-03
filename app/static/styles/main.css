@@ -1,3 +1,4 @@
+css
 /* Import Montserrat for headings and body text options */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&family=Lora:wght@300;400;500&family=Open+Sans:wght@300;400;600&display=swap');
 
@@ -1009,3 +1010,23 @@ h6 {
     align-items: center;
     padding: 20px; /* Extra padding for the bigger logo */
 }
+/* MAP STYLING */
+#map { 
+    height: 500px; 
+}
+
+/* Custom tooltip styling to prevent overlap and look nicer */
+.custom-tooltip {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 2px solid #BF7936 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+    padding: 8px 12px !important;
+    min-width: 80px !important;
+    text-align: center !important;
+    margin: 0 !important;
+    white-space: nowrap !important; }

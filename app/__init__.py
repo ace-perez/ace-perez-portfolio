@@ -164,8 +164,128 @@ visited_locations = [
         "coords": [40.7128, -74.0060],
     },
     {
-        "name": "Sydney, Australia",
-        "coords": [-33.8688, 151.2093],
+        "name": "Palawan, Philippines",
+        "coords": [13.5193, 122.0745],
+    },
+    {
+        "name": "Cebu, Philippines",
+        "coords": [12.0313, 124.5846],
+    },
+    {
+        "name": "London, UK",
+        "coords": [51.5074, -0.1278]
+    },
+    {
+        "name": "Dublin, Ireland",
+        "coords": [53.3498, -6.2603],
+    },
+    {
+        "name": "Edinburgh, Scotland",
+        "coords": [55.9533, -3.1883],
+    },
+    {
+        "name": "Mykonos, Greece",
+        "coords": [37.4415, 25.3667]
+    },
+    {
+        "name": "Santorini, Greece",
+        "coords": [36.3932, 25.4615],
+    },
+    {
+        "name": "Split, Croatia",
+        "coords": [43.5147, 16.4435],
+    },
+    {
+        "name": "Venice, Italy",
+        "coords": [45.4412, 12.3150],
+    },
+    {
+        "name": "Rome, Italy",
+        "coords": [41.9028, 12.4964],
+    },
+    {
+        "name": "Milan, Italy",
+        "coords": [45.4642, 9.1892],
+    },
+    {
+        "name": "Copenhagen, Denmark",
+        "coords": [55.6761, 12.5683],
+    },
+    {
+        "name": "Utrecht, Netherlands",
+        "coords": [52.0910, 5.1197],
+    },
+    {
+        "name": "Amsterdam, Netherlands",
+        "coords": [52.3702, 4.8951],
+    },
+    {
+        "name": "Ibiza, Spain",
+        "coords": [38.9072, -0.3720],
+    },
+    {
+        "name": "Washington DC, USA",
+        "coords": [38.9072, -77.0369],
+    },
+    {
+        "name": "Philadelphia, USA",
+        "coords": [39.9526, -75.1652],
+    },
+    {
+        "name": "Reykjavík, Iceland",
+        "coords": [64.1351, -21.8922],
+    },
+    {
+        "name": "Palma, Spain",
+        "coords": [39.5727, 2.6569],
+    },
+    {
+        "name": "Monaco, France",
+        "coords": [43.7330, 7.4100],
+    },
+    {
+        "name": "Nice, France",
+        "coords": [43.7102, 7.2620],
+    },
+    {
+        "name": "Bern, Switzerland",
+        "coords": [46.9480, 7.4473],
+    },
+    {
+        "name": "Zurich, Switzerland",
+        "coords": [47.3769, 8.5417],
+    },
+    {
+        "name": "Rotterdam, Netherlands",
+        "coords": [51.9252, 4.4750],
+    },
+    {
+        "name": "Bangkok, Thailand ",
+        "coords": [13.7563, 100.5017],
+    },
+    {
+        "name": "Bali, Indonesia",
+        "coords": [-8.8742, 115.2073]
+    },
+    {
+        "name": "Butuan, Philippines",
+        "coords": [14.8000, 121.0333]
+    },
+    {
+        "name": "Lisbon, Portugal",
+        "coords": [38.7223, -9.1400]
+    },
+    {
+        "name": "Bologna, Italy",
+        "coords": [44.4970, 11.3492]
+    },
+    {
+        "name": "Verona, Italy",
+        "coords": [45.4412, 12.3150]
+    },
+    {
+        "name": "Manchester, England",
+        "coords": [53.4808, -2.2426]
     }
 ]
 
@@ -173,7 +293,7 @@ visited_locations = [
 @app.route('/')
 def index():
     return render_template('index.html',
-                         title="MLH Fellow",
+                         title="Ace Perez",
                          url=os.getenv("URL"),
                          name="Ace Perez",
                          role="Software Developer",
