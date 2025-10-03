@@ -135,19 +135,19 @@ hobbies = [
         'name': 'Photography',
         'description': 'Passionate about capturing moments and exploring different perspectives through the lens.',
         'details': 'I specialize in landscape and street photography. My favorite time to shoot is during golden hour, and I love experimenting with long exposure techniques.',
-        'icon_color': '#77763C'
+        'icon_color': '#B2C294'
     },
     {
         'name': 'Hiking',
         'description': 'Love exploring nature trails and challenging myself with different terrains.',
         'details': 'I regularly explore local trails and have completed several challenging mountain hikes. My goal is to hike at least one new trail every month.',
-        'icon_color': '#C04000'
+        'icon_color': '#ff8f57'
     },
     {
         'name': 'Open Source',
         'description': 'Contributing to open source projects and building side projects.',
         'details': 'I actively contribute to various open source projects, mainly focusing on Python and JavaScript libraries. I believe in the power of community-driven development.',
-        'icon_color': '#77763C'
+        'icon_color': '#B2C294'
     }
 ]
 visited_locations = [
