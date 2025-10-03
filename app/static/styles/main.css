@@ -13,7 +13,7 @@ button {
 }
 
 body {
-    background-color: #f5f5f9;
+    background-color: #f7f7f7;
     background-size: cover;
     width: auto;
     width: auto;
@@ -156,22 +156,21 @@ body {
 
 /* Make main-content background white */
 .main-content {
-    background-color: white !important;
+    background-color: #FCF5E5 !important;
 }
 
-/* Target ONLY the profile section background */
+/* Target ONLY the profile section background - CENTERED PROFILE PICTURE */
 .profile, 
 #profile,
 div.profile,
 div#profile {
     position: relative !important;
     padding: 0 !important;
-    padding-right: 30px !important; /* Space from right edge */
     margin: 0 !important;
     height: 150px !important;
     overflow: hidden !important;
     display: block !important;
-    text-align: right !important; /* Right align content */
+    text-align: center !important; /* CHANGED: Center the profile picture */
     box-sizing: border-box !important;
     background-color: #BF7936 !important; /* Only the profile banner area */
 }
@@ -409,6 +408,7 @@ h6 {
     margin-bottom: 30px;
 }
 
+
 .hero:last-child {
     margin-bottom: 0;
 }
@@ -426,11 +426,18 @@ h6 {
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.about2 {
+    background: #FAF9F6;
+    padding: 40px;
+    border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    border-left: 2px solid #77763C;
-    border-right: 2px solid #CF9257;
-    border-bottom: 2px solid #CF9257;
-    border-top: 2px solid #77763C;
     text-align: center;
     width: 100%;
     max-width: 1300px;
@@ -474,16 +481,14 @@ h6 {
 }
 
 .experience-card {
-    background: white;
+    background: #FAF9F6;
     padding: 25px;
     margin-bottom: 30px;
     text-align: left;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-left: 2px solid #CF9257;
-    border-right: 2px solid #77763C;
-    border-bottom: 2px solid #77763C;
-    border-top: 2px solid #CF9257;
+    border-top: 3px solid #e67e22; /* accent color */
+    border-bottom: 3px solid #e67e22; /* accent color */
     box-sizing: border-box;
 }
 
@@ -492,13 +497,13 @@ h6 {
 }
 
 .experience-card h3 {
-    color: #1C539F;
+    color: #77763C;
     font-size: 24px;
     margin-bottom: 10px;
 }
 
 .experience-card .company {
-    color: #d4851a;
+    color: #C04000;
     font-size: 20px;
     margin-bottom: 10px;
 }
@@ -537,15 +542,16 @@ h6 {
 }
 
 .hobby-card {
-    background: white;
+    background: #FAF9F6;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    border-top: 3px solid #e67e22; /* accent color */
+    border-bottom: 3px solid #e67e22; /* accent color */
     padding: 25px;
     text-align: center;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #ffac46;
-    border-right: 4px solid #ffac46;
-    border-bottom: 4px solid #0c59ff;
-    border-top: 4px solid #0c59ff;
     transition: transform 0.3s ease;
     box-sizing: border-box;
 }
@@ -562,7 +568,7 @@ h6 {
 }
 
 .hobby-card h3 {
-    color: #1C539F;
+    color: #77763C;
     font-size: 24px;
     margin-bottom: 10px;
 }
@@ -589,10 +595,8 @@ h6 {
     text-align: left;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #ffac46;
-    border-right: 4px solid #ffac46;
-    border-bottom: 4px solid #0c59ff;
-    border-top: 4px solid #0c59ff;
+    border-top: 3px solid #e67e22; /* accent color */
+    border-bottom: 3px solid #e67e22; /* accent color */
     box-sizing: border-box;
 }
 
@@ -601,13 +605,13 @@ h6 {
 }
 
 .education-card h3 {
-    color: #1C539F;
+    color: #77763C;
     font-size: 24px;
     margin-bottom: 10px;
 }
 
 .education-card .school {
-    color: #d4851a;
+    color: #C04000;
     font-size: 20px;
     margin-bottom: 10px;
 }
@@ -642,7 +646,7 @@ h6 {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     margin-top: 20px;
-    border: 2px solid #1C539F;
+    border: 3px solid #e67e22;
 }
 .custom-tooltip {
     background-color: white;
@@ -672,7 +676,7 @@ h6 {
 }
 
 .timeline-form h3 {
-    color: #1C539F;
+    color: #77763C;
     margin-bottom: 20px;
     font-size: 24px;
 }
@@ -727,7 +731,7 @@ h6 {
 }
 
 .timeline-posts h3 {
-    color: #1C539F;
+    color: #77763C;
     margin-bottom: 20px;
     font-size: 24px;
 }
@@ -827,7 +831,7 @@ h6 {
     left: 0;
     height: 100vh;
     width: 250px;
-    background-color: #616C89;
+    background-color: #7C3030;
     color: white;
     z-index: 1000;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
