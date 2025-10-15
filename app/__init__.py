@@ -64,7 +64,7 @@ navigation_items = [
     {'name': 'Education', 'url': base_url + '#education', 'active': False},
     {'name': 'Hobbies', 'url': '/hobbies', 'active': False},
     {'name': 'Visited Places', 'url': base_url + '#visited-places', 'active': False},
-    {'name': 'Timeline', 'url': '/timeline', 'active': False},
+    # {'name': 'Timeline', 'url': '/timeline', 'active': False},  # Disabled timeline navigation
 ]
 
 
@@ -165,11 +165,11 @@ visited_locations = [
     },
     {
         "name": "Palawan, Philippines",
-        "coords": [13.5193, 122.0745],
+        "coords": [9.7856, 118.6265],
     },
     {
         "name": "Cebu, Philippines",
-        "coords": [12.0313, 124.5846],
+        "coords": [10.2926, 123.9022],
     },
     {
         "name": "London, UK",
@@ -264,12 +264,32 @@ visited_locations = [
         "coords": [13.7563, 100.5017],
     },
     {
-        "name": "Bali, Indonesia",
-        "coords": [-8.8742, 115.2073]
+        "name": "Ubud, Indonesia",
+        "coords": [-8.5069, 115.2625]
     },
     {
-        "name": "Butuan, Philippines",
-        "coords": [14.8000, 121.0333]
+        "name": "Uluwatu, Indonesia",
+        "coords": [-8.83143, 115.08702]
+    },
+    {
+        "name": "Kuta, Indonesia",
+        "coords": [-8.7224, 115.1767]
+    },
+    {
+        "name": "Canggu, Indonesia",
+        "coords": [-8.6478, 115.1385]
+    },
+    {
+        "name": "Sanur, Indonesia",
+        "coords": [-8.7072, 115.2626]
+    },
+    {
+        "name": "Seminyak, Indonesia",
+        "coords": [-8.6910, 115.1678]
+    },
+    {
+        "name": "Butuan City, Philippines",
+        "coords": [8.9475, 125.5406]
     },
     {
         "name": "Lisbon, Portugal",
@@ -286,9 +306,72 @@ visited_locations = [
     {
         "name": "Manchester, England",
         "coords": [53.4808, -2.2426]
+    },
+    {
+        "name": "Verona, Italy",
+        "coords": [45.4384, 10.9917]
+    },
+    {
+        "name": "Pisa, Italy",
+        "coords": [43.7228, 10.4018]
+    },
+    {
+        "name": "Cork, Ireland",
+        "coords": [51.8985, -8.4756]
+    },
+    {
+        "name": "Derry, Ireland",
+        "coords": [54.9965, -7.3101]
+    },
+    {
+        "name": "Eindhoven, Netherlands",
+        "coords": [51.4231, 5.4623]
+    },
+    {
+        "name": "Den Haag, Netherlands",
+        "coords": [52.0705, 4.3007]
+    },
+    {
+        "name": "Leiden, Netherlands",
+        "coords": [52.1636, 4.4802]
+    },
+    {
+        "name": "Haarlem, Netherlands",
+        "coords": [52.3874, 4.6462]
+    },
+    {
+        "name": "Galway City, Ireland",
+        "coords": [53.2740, -9.0513]
+    },
+    {
+        "name": "Atlantic City, USA",
+        "coords": [39.3637, -74.4291]
+    },
+    {
+        "name": "Newark, USA",
+        "coords": [40.7315, -74.1745]
+    },
+    {
+        "name": "El Nido, Philippines",
+        "coords": [11.1989, 119.4232]
+    },
+    {
+        "name": "Ios, Greece",
+        "coords": [36.7233, 25.2823]
+    },
+    {
+        "name": "Paros, Greece",
+        "coords": [37.0504, 25.1907]
+    },
+    {
+        "name": "Naxos, Greece",
+        "coords": [37.1036, 25.3777]
+    },
+    {
+        "name": "Aix-en-Provence, France",
+        "coords": [43.5323, 5.4510]
     }
 ]
-
 
 @app.route('/')
 def index():
@@ -379,11 +462,11 @@ def delete_timeline_post(post_id):
             'error': f'Failed to delete timeline post: {str(e)}'
         }, 500
 
-@app.route('/timeline')
-def timeline_page():
-    return render_template('timeline.html',
-                         title="Timeline",
-                        navigation=get_navigation('/timeline'),)
+# @app.route('/timeline')  # Commented out to disable the timeline page
+# def timeline_page():
+#     return render_template('timeline.html',
+#                          title="Timeline",
+#                         navigation=get_navigation('/timeline'),)
 
 @app.route('/test-deployment')
 def test_deployment():
