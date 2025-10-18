@@ -35,8 +35,8 @@
             <div class="experience-container">
                 {% for experience in work_experiences %}
                 <div class="experience-card">
-                    <h3>{{ experience.title }}</h3>
-                    <div class="company">{{ experience.company }}</div>
+                    <h3><span class="highlight"> {{ experience.title }} </span></h3>
+                    <div class="company"><span class="highlight-role">{{ experience.company }} </span></div>
                     <div class="duration">{{ experience.duration }}</div>
                     <ul>
                         {% for achievement in experience.achievements %}
@@ -58,8 +58,8 @@
             <div class="education-container">
                 {% for edu in education %}
                 <div class="education-card">
-                    <h3>{{ edu.degree }}</h3>
-                    <div class="school">{{ edu.school }}</div>
+                    <h3><span class="highlight">{{ edu.degree }}</span></h3>
+                    <div class="school"><span class="highlight-role">{{ edu.school }}</span></div>
                     <div class="duration">{{ edu.duration }}</div>
                     {% if edu.achievements %}
                     <ul>
