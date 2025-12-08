@@ -64,23 +64,163 @@
     <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
 
     <script>
-    function toggleSidebar() {
-        const sidebar = document.querySelector('.sidebar');
-        sidebar.classList.toggle('mobile-open');
-    }
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('mobile-open');
+}
 
-    // Close sidebar when clicking outside on mobile
-    document.addEventListener('click', function(event) {
-        const sidebar = document.querySelector('.sidebar');
-        const menuBtn = document.querySelector('.mobile-menu-btn');
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', function(event) {
+    const sidebar = document.querySelector('.sidebar');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (window.innerWidth <= 768 && 
+        !sidebar.contains(event.target) && 
+        !menuBtn.contains(event.target)) {
+        sidebar.classList.remove('mobile-open');
+    }
+});
+
+// Dynamic navigation highlighting
+document.addEventListener('DOMContentLoaded', function() {
+    // Only run on the main page where sections exist
+    if (window.location.pathname === '/') {
+        const navLinks = document.querySelectorAll('.sidebar-link[href*="#"]');
+        const sections = [];
         
-        if (window.innerWidth <= 768 && 
-            !sidebar.contains(event.target) && 
-            !menuBtn.contains(event.target)) {
-            sidebar.classList.remove('mobile-open');
+        // Map navigation links to their corresponding sections
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.includes('#')) {
+                const sectionId = href.split('#')[1];
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    sections.push({
+                        id: sectionId,
+                        element: section,
+                        link: link
+                    });
+                }
+            }
+        });
+        
+        // Sort sections by their position on the page
+        sections.sort((a, b) => {
+            return a.element.getBoundingClientRect().top - b.element.getBoundingClientRect().top;
+        });
+        
+        // Function to update active navigation
+        function updateActiveNav(activeLink) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
         }
-    });
-    </script>
+        
+        // Handle click events on navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.includes('#')) {
+                    e.preventDefault();
+                    const sectionId = href.split('#')[1];
+                    const targetSection = document.getElementById(sectionId);
+                    
+                    if (targetSection) {
+                        // Update active state immediately on click
+                        updateActiveNav(this);
+                        
+                        // Smooth scroll to section
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Improved scroll detection
+        let ticking = false;
+        function updateOnScroll() {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollTop = window.scrollY;
+                    const windowHeight = window.innerHeight;
+                    const triggerPoint = scrollTop + (windowHeight * 0.3); // 30% from top
+                    
+                    // Special case: if we're at the very top, always highlight Home
+                    if (scrollTop < 100) {
+                        const homeLink = navLinks[0]; // First link should be Home
+                        updateActiveNav(homeLink);
+                        ticking = false;
+                        return;
+                    }
+                    
+                    let activeSection = null;
+                    
+                    // Find which section is currently most prominent
+                    sections.forEach(section => {
+                        const rect = section.element.getBoundingClientRect();
+                        const sectionTop = rect.top + scrollTop;
+                        const sectionBottom = sectionTop + rect.height;
+                        
+                        // If the trigger point is within this section
+                        if (triggerPoint >= sectionTop && triggerPoint < sectionBottom) {
+                            activeSection = section;
+                        }
+                    });
+                    
+                    // If no section was found using the trigger point, 
+                    // find the section closest to the top of viewport
+                    if (!activeSection) {
+                        let closestSection = null;
+                        let closestDistance = Infinity;
+                        
+                        sections.forEach(section => {
+                            const rect = section.element.getBoundingClientRect();
+                            const distance = Math.abs(rect.top);
+                            
+                            if (distance < closestDistance && rect.bottom > 0) {
+                                closestDistance = distance;
+                                closestSection = section;
+                            }
+                        });
+                        
+                        activeSection = closestSection;
+                    }
+                    
+                    if (activeSection) {
+                        updateActiveNav(activeSection.link);
+                    }
+                    
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', updateOnScroll, { passive: true });
+        
+        // Set initial active state when page loads
+        setTimeout(() => {
+            updateOnScroll();
+        }, 100);
+        
+        // Also handle the logo click
+        const logoLink = document.querySelector('.nav-logo a');
+        if (logoLink) {
+            logoLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Highlight Home immediately when logo is clicked
+                const homeLink = navLinks[0];
+                updateActiveNav(homeLink);
+            });
+        }
+    }
+});
+</script>
 </body>
 
 </html>

@@ -62,7 +62,7 @@ navigation_items = [
     {'name': 'Home', 'url': base_url + '#profile', 'active': False},
     {'name': 'Experience', 'url': base_url + '#work-experience', 'active': False},
     {'name': 'Education', 'url': base_url + '#education', 'active': False},
-    {'name': 'Hobbies', 'url': '/hobbies', 'active': False},
+    {'name': 'Hobbies', 'url': base_url +'#hobbies', 'active': False},
     {'name': 'Visited Places', 'url': base_url + '#visited-places', 'active': False},
     # {'name': 'Timeline', 'url': '/timeline', 'active': False},  # Disabled timeline navigation
 ]
