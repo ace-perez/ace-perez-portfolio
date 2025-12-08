@@ -73,7 +73,12 @@ def get_navigation(current_page):
     nav_items = []
     for item in navigation_items:
         nav_item = item.copy()
-        nav_item['active'] = (nav_item['url'] == current_page)
+        # Handle anchor links on home page
+        if current_page == '/' and nav_item['url'].startswith(base_url + '#'):
+            # Set the first anchor link (Profile) as active by default on home page
+            nav_item['active'] = (nav_item['name'] == 'Home')
+        else:
+            nav_item['active'] = (nav_item['url'] == current_page)
         nav_items.append(nav_item)
     return nav_items
 
