@@ -26,9 +26,58 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- Add Typed.js -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    
     <style>
         #map { height: 500px; }
+        
+        /* Custom styling for typed text */
+        .typed-name {
+            color: #B2C294;
+            font-family: 'Courier New', monospace;
+            display: inline;
+        }
+        
+        .typed-role {
+            color: #ff8f57;
+            font-family: 'Courier New', monospace;
+            display: inline;
+        }
+        
+        /* Hide the default Typed.js cursor */
+        .typed-cursor {
+            display: none !important;
+        }
+        
+        /* Persistent cursor elements */
+        .persistent-cursor {
+            display: inline-block;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .name-cursor {
+            color: #B2C294;
+        }
+        
+        .role-cursor {
+            color: #ff8f57;
+        }
+        
+        /* Blinking animation */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Container styling to keep elements inline */
+        .typing-container {
+            display: inline;
+        }
     </style>
+    
     <title>{% block title %}{{ title }}{% endblock %}</title>
     {% block extra_head %}{% endblock %}
 </head>
@@ -81,9 +130,116 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Dynamic navigation highlighting
+// Initialize synchronized typing animation
 document.addEventListener('DOMContentLoaded', function() {
-    // Only run on the main page where sections exist
+    const nameElement = document.getElementById('typed-name');
+    const roleElement = document.getElementById('typed-role');
+    
+    if (nameElement && roleElement) {
+        // Create persistent cursor elements
+        const nameCursor = document.createElement('span');
+        nameCursor.className = 'persistent-cursor name-cursor';
+        nameCursor.textContent = '|';
+        
+        const roleCursor = document.createElement('span');
+        roleCursor.className = 'persistent-cursor role-cursor';
+        roleCursor.textContent = '|';
+        
+        // Insert cursors right after the typed elements
+        nameElement.parentNode.insertBefore(nameCursor, nameElement.nextSibling);
+        roleElement.parentNode.insertBefore(roleCursor, roleElement.nextSibling);
+        
+        // Function to match cursor sizes to their respective text elements
+        function matchCursorSizes() {
+            setTimeout(() => {
+                const nameStyles = window.getComputedStyle(nameElement);
+                const roleStyles = window.getComputedStyle(roleElement);
+                
+                const fontProps = ['fontSize', 'lineHeight', 'fontWeight', 'fontFamily', 'fontStyle', 'fontVariant'];
+                
+                fontProps.forEach(prop => {
+                    nameCursor.style[prop] = nameStyles[prop];
+                    roleCursor.style[prop] = roleStyles[prop];
+                });
+                
+                nameCursor.style.setProperty('font-size', nameStyles.fontSize, 'important');
+                roleCursor.style.setProperty('font-size', roleStyles.fontSize, 'important');
+                
+            }, 50);
+        }
+        
+        let nameTyped = null;
+        let roleTyped = null;
+        
+        function startAnimation() {
+            matchCursorSizes();
+            
+            // Step 1: Type the name
+            nameTyped = new Typed('#typed-name', {
+                strings: ['{{ name }}'],
+                typeSpeed: 65,
+                showCursor: false,
+                loop: false,
+                onComplete: function(self) {
+                    // Step 2: After name is complete, start typing role (faster delay)
+                    setTimeout(() => {
+                        roleTyped = new Typed('#typed-role', {
+                            strings: ['{{ role }}'],
+                            typeSpeed: 75,
+                            showCursor: false,
+                            loop: false,
+                            onComplete: function(self) {
+                                // Step 3: After both complete, wait then start backspacing
+                                setTimeout(() => {
+                                    startBackspacing();
+                                }, 4000); // Wait 2 seconds before backspacing
+                            }
+                        });
+                    }, 300); // Reduced from 800ms to 500ms
+                }
+            });
+        }
+        
+        function startBackspacing() {
+            // Step 4: Backspace the role first
+            roleTyped = new Typed('#typed-role', {
+                strings: ['{{ role }}', ''], // From role to empty
+                typeSpeed: 0, // Don't type, just start with the text
+                backSpeed: 45, // Speed of backspacing
+                showCursor: false,
+                loop: false,
+                onComplete: function(self) {
+                    // Step 5: After role is backspaced, backspace the name (faster delay)
+                    setTimeout(() => {
+                        nameTyped = new Typed('#typed-name', {
+                            strings: ['{{ name }}', ''], // From name to empty
+                            typeSpeed: 0, // Don't type, just start with the text
+                            backSpeed: 55, // Slightly slower for name
+                            showCursor: false,
+                            loop: false,
+                            onComplete: function(self) {
+                                // Step 6: Clean up and restart
+                                if (nameTyped) nameTyped.destroy();
+                                if (roleTyped) roleTyped.destroy();
+                                
+                                // Clear elements
+                                nameElement.innerHTML = '';
+                                roleElement.innerHTML = '';
+                                
+                                // Restart the whole cycle (faster restart)
+                                setTimeout(startAnimation, 200); // Reduced from 1000ms to 500ms
+                            }
+                        });
+                    }, 500);
+                }
+            });
+        }
+        
+        // Start the animation
+        startAnimation();
+    }
+
+    // Dynamic navigation highlighting - only on main page
     if (window.location.pathname === '/') {
         const navLinks = document.querySelectorAll('.sidebar-link[href*="#"]');
         const sections = [];

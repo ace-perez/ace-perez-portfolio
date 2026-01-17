@@ -20,7 +20,7 @@
     <div class="hero-text">
         <div class="about">
             <h2>Hi</h2>
-            <h1>I'm <span class="highlight">{{ name }}</span><br />a <span class="highlight-role">{{ role }}</span></h1>
+            <h1>I'm <span id="typed-name" class="highlight typed-name"></span><br />a <span id="typed-role" class="highlight-role typed-role"></span></h1>
             <p>{{ about_text }}</p>
         </div>
     </div>
@@ -129,6 +129,7 @@
 {% block extra_scripts %}
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    // Map initialization - removed duplicate typing code
     const map = L.map('map').setView([20, 0], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -140,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     locations.forEach((location, index) => {
         // Create the main marker (red pin)
         const marker = L.marker(location.coords).addTo(map);
-        
+
         // Create an invisible larger circle for better hover detection
         const hoverArea = L.circle(location.coords, {
             radius: 30000, // 30km radius for hover detection
@@ -149,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
             interactive: true,
             className: `hover-area-${index}` // Unique class for each circle
         }).addTo(map);
-        
+
         // Custom marker with better styling
         marker.setIcon(
             L.icon({
