@@ -36,11 +36,45 @@
         .typed-name {
             color: #B2C294;
             font-family: 'Courier New', monospace;
+            display: inline;
         }
         
         .typed-role {
             color: #ff8f57;
             font-family: 'Courier New', monospace;
+            display: inline;
+        }
+        
+        /* Hide the default Typed.js cursor */
+        .typed-cursor {
+            display: none !important;
+        }
+        
+        /* Persistent cursor elements */
+        .persistent-cursor {
+            display: inline-block;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .name-cursor {
+            color: #B2C294;
+        }
+        
+        .role-cursor {
+            color: #ff8f57;
+        }
+        
+        /* Blinking animation */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Container styling to keep elements inline */
+        .typing-container {
+            display: inline;
         }
     </style>
     
@@ -102,6 +136,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const roleElement = document.getElementById('typed-role');
     
     if (nameElement && roleElement) {
+        // Create persistent cursor elements
+        const nameCursor = document.createElement('span');
+        nameCursor.className = 'persistent-cursor name-cursor';
+        nameCursor.textContent = '|';
+        
+        const roleCursor = document.createElement('span');
+        roleCursor.className = 'persistent-cursor role-cursor';
+        roleCursor.textContent = '|';
+        
+        // Insert cursors right after the typed elements
+        nameElement.parentNode.insertBefore(nameCursor, nameElement.nextSibling);
+        roleElement.parentNode.insertBefore(roleCursor, roleElement.nextSibling);
+        
         let nameTyped = null;
         let roleTyped = null;
         
@@ -110,8 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
             nameTyped = new Typed('#typed-name', {
                 strings: ['{{ name }}'],
                 typeSpeed: 100,
-                showCursor: true,
-                cursorChar: '|',
+                showCursor: false, // Disable Typed.js cursor since we use persistent ones
                 loop: false,
                 onComplete: function(self) {
                     // Step 2: After name is complete, start typing role
@@ -119,8 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         roleTyped = new Typed('#typed-role', {
                             strings: ['{{ role }}'],
                             typeSpeed: 90,
-                            showCursor: true,
-                            cursorChar: '|',
+                            showCursor: false, // Disable Typed.js cursor since we use persistent ones
                             loop: false,
                             onComplete: function(self) {
                                 // Step 3: After both complete, wait then restart
@@ -129,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     if (nameTyped) nameTyped.destroy();
                                     if (roleTyped) roleTyped.destroy();
                                     
-                                    // Clear elements
+                                    // Clear elements but keep cursors
                                     nameElement.innerHTML = '';
                                     roleElement.innerHTML = '';
                                     
