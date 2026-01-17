@@ -177,25 +177,25 @@ document.addEventListener('DOMContentLoaded', function() {
             // Step 1: Type the name
             nameTyped = new Typed('#typed-name', {
                 strings: ['{{ name }}'],
-                typeSpeed: 100,
+                typeSpeed: 65,
                 showCursor: false,
                 loop: false,
                 onComplete: function(self) {
-                    // Step 2: After name is complete, start typing role
+                    // Step 2: After name is complete, start typing role (faster delay)
                     setTimeout(() => {
                         roleTyped = new Typed('#typed-role', {
                             strings: ['{{ role }}'],
-                            typeSpeed: 90,
+                            typeSpeed: 75,
                             showCursor: false,
                             loop: false,
                             onComplete: function(self) {
                                 // Step 3: After both complete, wait then start backspacing
                                 setTimeout(() => {
                                     startBackspacing();
-                                }, 2000); // Wait 2 seconds before backspacing
+                                }, 4000); // Wait 2 seconds before backspacing
                             }
                         });
-                    }, 800);
+                    }, 300); // Reduced from 800ms to 500ms
                 }
             });
         }
@@ -205,16 +205,16 @@ document.addEventListener('DOMContentLoaded', function() {
             roleTyped = new Typed('#typed-role', {
                 strings: ['{{ role }}', ''], // From role to empty
                 typeSpeed: 0, // Don't type, just start with the text
-                backSpeed: 50, // Speed of backspacing
+                backSpeed: 45, // Speed of backspacing
                 showCursor: false,
                 loop: false,
                 onComplete: function(self) {
-                    // Step 5: After role is backspaced, backspace the name
+                    // Step 5: After role is backspaced, backspace the name (faster delay)
                     setTimeout(() => {
                         nameTyped = new Typed('#typed-name', {
                             strings: ['{{ name }}', ''], // From name to empty
                             typeSpeed: 0, // Don't type, just start with the text
-                            backSpeed: 60, // Slightly slower for name
+                            backSpeed: 55, // Slightly slower for name
                             showCursor: false,
                             loop: false,
                             onComplete: function(self) {
@@ -226,11 +226,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 nameElement.innerHTML = '';
                                 roleElement.innerHTML = '';
                                 
-                                // Restart the whole cycle
-                                setTimeout(startAnimation, 1000);
+                                // Restart the whole cycle (faster restart)
+                                setTimeout(startAnimation, 200); // Reduced from 1000ms to 500ms
                             }
                         });
-                    }, 500); // Small delay between role and name backspacing
+                    }, 500);
                 }
             });
         }
