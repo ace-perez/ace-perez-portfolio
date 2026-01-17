@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Sort sections by their position on the page
         sections.sort((a, b) => {
-            return a.element.getBoundingClientRect().top - b.element.getBoundingClientRect().top;
+            return a.element.offsetTop - b.element.offsetTop;
         });
         
         // Function to update active navigation
@@ -147,47 +147,58 @@ document.addEventListener('DOMContentLoaded', function() {
                 requestAnimationFrame(() => {
                     const scrollTop = window.scrollY;
                     const windowHeight = window.innerHeight;
-                    const triggerPoint = scrollTop + (windowHeight * 0.3); // 30% from top
+                    const documentHeight = document.documentElement.scrollHeight;
+                    const scrollBottom = scrollTop + windowHeight;
                     
                     // Special case: if we're at the very top, always highlight Home
                     if (scrollTop < 100) {
-                        const homeLink = navLinks[0]; // First link should be Home
+                        const homeLink = sections.find(s => s.id === 'profile')?.link || navLinks[0];
                         updateActiveNav(homeLink);
                         ticking = false;
                         return;
                     }
                     
-                    let activeSection = null;
-                    
-                    // Find which section is currently most prominent
-                    sections.forEach(section => {
-                        const rect = section.element.getBoundingClientRect();
-                        const sectionTop = rect.top + scrollTop;
-                        const sectionBottom = sectionTop + rect.height;
-                        
-                        // If the trigger point is within this section
-                        if (triggerPoint >= sectionTop && triggerPoint < sectionBottom) {
-                            activeSection = section;
+                    // Special case: if we're near the bottom, highlight the last section
+                    if (scrollBottom >= documentHeight - 50) {
+                        const lastSection = sections[sections.length - 1];
+                        if (lastSection) {
+                            updateActiveNav(lastSection.link);
+                            ticking = false;
+                            return;
                         }
-                    });
+                    }
                     
-                    // If no section was found using the trigger point, 
-                    // find the section closest to the top of viewport
+                    let activeSection = null;
+                    const triggerPoint = scrollTop + (windowHeight * 0.3);
+                    
+                    // Find the section that should be active
+                    for (let i = sections.length - 1; i >= 0; i--) {
+                        const section = sections[i];
+                        const sectionTop = section.element.offsetTop;
+                        
+                        if (triggerPoint >= sectionTop) {
+                            activeSection = section;
+                            break;
+                        }
+                    }
+                    
+                    // Fallback: if no section found, find the most visible one
                     if (!activeSection) {
-                        let closestSection = null;
-                        let closestDistance = Infinity;
+                        let mostVisible = null;
+                        let maxVisibleArea = 0;
                         
                         sections.forEach(section => {
                             const rect = section.element.getBoundingClientRect();
-                            const distance = Math.abs(rect.top);
+                            const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+                            const visibleArea = Math.max(0, visibleHeight) * rect.width;
                             
-                            if (distance < closestDistance && rect.bottom > 0) {
-                                closestDistance = distance;
-                                closestSection = section;
+                            if (visibleArea > maxVisibleArea) {
+                                maxVisibleArea = visibleArea;
+                                mostVisible = section;
                             }
                         });
                         
-                        activeSection = closestSection;
+                        activeSection = mostVisible;
                     }
                     
                     if (activeSection) {
@@ -214,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 // Highlight Home immediately when logo is clicked
-                const homeLink = navLinks[0];
+                const homeLink = sections.find(s => s.id === 'profile')?.link || navLinks[0];
                 updateActiveNav(homeLink);
             });
         }
