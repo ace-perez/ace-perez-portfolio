@@ -26,9 +26,45 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- Add Typed.js -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    
     <style>
         #map { height: 500px; }
+        
+        /* Custom styling for typed text */
+        .typed-name {
+            color: #B2C294;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .typed-role {
+            color: #ff8f57;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Custom cursor styling - make it bigger and more visible */
+        .typed-cursor {
+            font-weight: bold !important;
+            font-size: 1.2em !important;
+            animation: blink 1s infinite !important;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Specific cursor colors to match text colors */
+        #typed-name .typed-cursor {
+            color: #B2C294 !important; /* Green to match name */
+        }
+        
+        #typed-role .typed-cursor {
+            color: #ff8f57 !important; /* Orange to match role */
+        }
     </style>
+    
     <title>{% block title %}{{ title }}{% endblock %}</title>
     {% block extra_head %}{% endblock %}
 </head>
@@ -81,9 +117,66 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Dynamic navigation highlighting
+// Initialize synchronized typing animation
 document.addEventListener('DOMContentLoaded', function() {
-    // Only run on the main page where sections exist
+    const nameElement = document.getElementById('typed-name');
+    const roleElement = document.getElementById('typed-role');
+    
+    if (nameElement && roleElement) {
+        let nameTyped = null;
+        let roleTyped = null;
+        
+        // Start the animation cycle
+        function startAnimation() {
+            // Step 1: Type the name
+            nameTyped = new Typed('#typed-name', {
+                strings: ['{{ name }}'],
+                typeSpeed: 100,
+                backSpeed: 60,
+                showCursor: true,
+                cursorChar: '|',
+                loop: false,
+                onComplete: function(self) {
+                    // Step 2: After name is complete, start typing role
+                    setTimeout(() => {
+                        roleTyped = new Typed('#typed-role', {
+                            strings: ['{{ role }}'],
+                            typeSpeed: 90,
+                            backSpeed: 50,
+                            showCursor: true,
+                            cursorChar: '|',
+                            loop: false,
+                            onComplete: function(self) {
+                                // Step 3: After role is complete, wait then backspace role
+                                setTimeout(() => {
+                                    self.backspace(self.strings[0].length);
+                                    
+                                    // Step 4: After role backspace, backspace name
+                                    setTimeout(() => {
+                                        nameTyped.backspace(nameTyped.strings[0].length);
+                                        
+                                        // Step 5: After name backspace, restart cycle
+                                        setTimeout(() => {
+                                            if (nameTyped) nameTyped.destroy();
+                                            if (roleTyped) roleTyped.destroy();
+                                            nameElement.innerHTML = '';
+                                            roleElement.innerHTML = '';
+                                            setTimeout(startAnimation, 1000);
+                                        }, 500);
+                                    }, 300);
+                                }, 2000);
+                            }
+                        });
+                    }, 800);
+                }
+            });
+        }
+        
+        // Start the animation
+        startAnimation();
+    }
+
+    // Dynamic navigation highlighting - only on main page
     if (window.location.pathname === '/') {
         const navLinks = document.querySelectorAll('.sidebar-link[href*="#"]');
         const sections = [];
