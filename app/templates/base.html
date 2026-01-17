@@ -151,24 +151,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Function to match cursor sizes to their respective text elements
         function matchCursorSizes() {
-            // Wait for CSS to fully load
             setTimeout(() => {
                 const nameStyles = window.getComputedStyle(nameElement);
                 const roleStyles = window.getComputedStyle(roleElement);
                 
-                console.log('Name element styles:', {
-                    fontSize: nameStyles.fontSize,
-                    lineHeight: nameStyles.lineHeight,
-                    fontWeight: nameStyles.fontWeight
-                });
-                
-                console.log('Role element styles:', {
-                    fontSize: roleStyles.fontSize,
-                    lineHeight: roleStyles.lineHeight,
-                    fontWeight: roleStyles.fontWeight
-                });
-                
-                // Copy ALL computed font properties
                 const fontProps = ['fontSize', 'lineHeight', 'fontWeight', 'fontFamily', 'fontStyle', 'fontVariant'];
                 
                 fontProps.forEach(prop => {
@@ -176,25 +162,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     roleCursor.style[prop] = roleStyles[prop];
                 });
                 
-                // Force specific properties that might be important
                 nameCursor.style.setProperty('font-size', nameStyles.fontSize, 'important');
                 roleCursor.style.setProperty('font-size', roleStyles.fontSize, 'important');
                 
-            }, 200);
+            }, 50);
         }
         
         let nameTyped = null;
         let roleTyped = null;
         
         function startAnimation() {
-            // Update cursor sizes before each animation cycle
             matchCursorSizes();
             
             // Step 1: Type the name
             nameTyped = new Typed('#typed-name', {
                 strings: ['{{ name }}'],
                 typeSpeed: 100,
-                showCursor: false, // Disable Typed.js cursor since we use persistent ones
+                showCursor: false,
                 loop: false,
                 onComplete: function(self) {
                     // Step 2: After name is complete, start typing role
@@ -202,25 +186,51 @@ document.addEventListener('DOMContentLoaded', function() {
                         roleTyped = new Typed('#typed-role', {
                             strings: ['{{ role }}'],
                             typeSpeed: 90,
-                            showCursor: false, // Disable Typed.js cursor since we use persistent ones
+                            showCursor: false,
                             loop: false,
                             onComplete: function(self) {
-                                // Step 3: After both complete, wait then restart
+                                // Step 3: After both complete, wait then start backspacing
                                 setTimeout(() => {
-                                    // Clean restart - destroy both instances
-                                    if (nameTyped) nameTyped.destroy();
-                                    if (roleTyped) roleTyped.destroy();
-                                    
-                                    // Clear elements but keep cursors
-                                    nameElement.innerHTML = '';
-                                    roleElement.innerHTML = '';
-                                    
-                                    // Restart after delay
-                                    setTimeout(startAnimation, 1000);
-                                }, 3000);
+                                    startBackspacing();
+                                }, 2000); // Wait 2 seconds before backspacing
                             }
                         });
                     }, 800);
+                }
+            });
+        }
+        
+        function startBackspacing() {
+            // Step 4: Backspace the role first
+            roleTyped = new Typed('#typed-role', {
+                strings: ['{{ role }}', ''], // From role to empty
+                typeSpeed: 0, // Don't type, just start with the text
+                backSpeed: 50, // Speed of backspacing
+                showCursor: false,
+                loop: false,
+                onComplete: function(self) {
+                    // Step 5: After role is backspaced, backspace the name
+                    setTimeout(() => {
+                        nameTyped = new Typed('#typed-name', {
+                            strings: ['{{ name }}', ''], // From name to empty
+                            typeSpeed: 0, // Don't type, just start with the text
+                            backSpeed: 60, // Slightly slower for name
+                            showCursor: false,
+                            loop: false,
+                            onComplete: function(self) {
+                                // Step 6: Clean up and restart
+                                if (nameTyped) nameTyped.destroy();
+                                if (roleTyped) roleTyped.destroy();
+                                
+                                // Clear elements
+                                nameElement.innerHTML = '';
+                                roleElement.innerHTML = '';
+                                
+                                // Restart the whole cycle
+                                setTimeout(startAnimation, 1000);
+                            }
+                        });
+                    }, 500); // Small delay between role and name backspacing
                 }
             });
         }
