@@ -149,10 +149,47 @@ document.addEventListener('DOMContentLoaded', function() {
         nameElement.parentNode.insertBefore(nameCursor, nameElement.nextSibling);
         roleElement.parentNode.insertBefore(roleCursor, roleElement.nextSibling);
         
+        // Function to match cursor sizes to their respective text elements
+        function matchCursorSizes() {
+            // Wait for CSS to fully load
+            setTimeout(() => {
+                const nameStyles = window.getComputedStyle(nameElement);
+                const roleStyles = window.getComputedStyle(roleElement);
+                
+                console.log('Name element styles:', {
+                    fontSize: nameStyles.fontSize,
+                    lineHeight: nameStyles.lineHeight,
+                    fontWeight: nameStyles.fontWeight
+                });
+                
+                console.log('Role element styles:', {
+                    fontSize: roleStyles.fontSize,
+                    lineHeight: roleStyles.lineHeight,
+                    fontWeight: roleStyles.fontWeight
+                });
+                
+                // Copy ALL computed font properties
+                const fontProps = ['fontSize', 'lineHeight', 'fontWeight', 'fontFamily', 'fontStyle', 'fontVariant'];
+                
+                fontProps.forEach(prop => {
+                    nameCursor.style[prop] = nameStyles[prop];
+                    roleCursor.style[prop] = roleStyles[prop];
+                });
+                
+                // Force specific properties that might be important
+                nameCursor.style.setProperty('font-size', nameStyles.fontSize, 'important');
+                roleCursor.style.setProperty('font-size', roleStyles.fontSize, 'important');
+                
+            }, 200);
+        }
+        
         let nameTyped = null;
         let roleTyped = null;
         
         function startAnimation() {
+            // Update cursor sizes before each animation cycle
+            matchCursorSizes();
+            
             // Step 1: Type the name
             nameTyped = new Typed('#typed-name', {
                 strings: ['{{ name }}'],
