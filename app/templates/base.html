@@ -42,27 +42,6 @@
             color: #ff8f57;
             font-family: 'Courier New', monospace;
         }
-        
-        /* Custom cursor styling - make it bigger and more visible */
-        .typed-cursor {
-            font-weight: bold !important;
-            font-size: 1.2em !important;
-            animation: blink 1s infinite !important;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        /* Specific cursor colors to match text colors */
-        #typed-name .typed-cursor {
-            color: #B2C294 !important; /* Green to match name */
-        }
-        
-        #typed-role .typed-cursor {
-            color: #ff8f57 !important; /* Orange to match role */
-        }
     </style>
     
     <title>{% block title %}{{ title }}{% endblock %}</title>
@@ -126,13 +105,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let nameTyped = null;
         let roleTyped = null;
         
-        // Start the animation cycle
         function startAnimation() {
             // Step 1: Type the name
             nameTyped = new Typed('#typed-name', {
                 strings: ['{{ name }}'],
                 typeSpeed: 100,
-                backSpeed: 60,
                 showCursor: true,
                 cursorChar: '|',
                 loop: false,
@@ -142,29 +119,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         roleTyped = new Typed('#typed-role', {
                             strings: ['{{ role }}'],
                             typeSpeed: 90,
-                            backSpeed: 50,
                             showCursor: true,
                             cursorChar: '|',
                             loop: false,
                             onComplete: function(self) {
-                                // Step 3: After role is complete, wait then backspace role
+                                // Step 3: After both complete, wait then restart
                                 setTimeout(() => {
-                                    self.backspace(self.strings[0].length);
+                                    // Clean restart - destroy both instances
+                                    if (nameTyped) nameTyped.destroy();
+                                    if (roleTyped) roleTyped.destroy();
                                     
-                                    // Step 4: After role backspace, backspace name
-                                    setTimeout(() => {
-                                        nameTyped.backspace(nameTyped.strings[0].length);
-                                        
-                                        // Step 5: After name backspace, restart cycle
-                                        setTimeout(() => {
-                                            if (nameTyped) nameTyped.destroy();
-                                            if (roleTyped) roleTyped.destroy();
-                                            nameElement.innerHTML = '';
-                                            roleElement.innerHTML = '';
-                                            setTimeout(startAnimation, 1000);
-                                        }, 500);
-                                    }, 300);
-                                }, 2000);
+                                    // Clear elements
+                                    nameElement.innerHTML = '';
+                                    roleElement.innerHTML = '';
+                                    
+                                    // Restart after delay
+                                    setTimeout(startAnimation, 1000);
+                                }, 3000);
                             }
                         });
                     }, 800);
