@@ -26,8 +26,6 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <!-- Add Typed.js -->
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     
     <style>
         #map { height: 500px; }
@@ -43,11 +41,6 @@
             color: #ff8f57;
             font-family: 'Courier New', monospace;
             display: inline;
-        }
-        
-        /* Hide the default Typed.js cursor */
-        .typed-cursor {
-            display: none !important;
         }
         
         /* Persistent cursor elements */
@@ -130,7 +123,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Initialize synchronized typing animation
+// Custom typing animation without Typed.js
 document.addEventListener('DOMContentLoaded', function() {
     const nameElement = document.getElementById('typed-name');
     const roleElement = document.getElementById('typed-role');
@@ -151,92 +144,113 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Function to match cursor sizes to their respective text elements
         function matchCursorSizes() {
-            setTimeout(() => {
-                const nameStyles = window.getComputedStyle(nameElement);
-                const roleStyles = window.getComputedStyle(roleElement);
-                
-                const fontProps = ['fontSize', 'lineHeight', 'fontWeight', 'fontFamily', 'fontStyle', 'fontVariant'];
-                
-                fontProps.forEach(prop => {
-                    nameCursor.style[prop] = nameStyles[prop];
-                    roleCursor.style[prop] = roleStyles[prop];
-                });
-                
-                nameCursor.style.setProperty('font-size', nameStyles.fontSize, 'important');
-                roleCursor.style.setProperty('font-size', roleStyles.fontSize, 'important');
-                
-            }, 50);
-        }
-        
-        let nameTyped = null;
-        let roleTyped = null;
-        
-        function startAnimation() {
-            matchCursorSizes();
+            const nameStyles = window.getComputedStyle(nameElement);
+            const roleStyles = window.getComputedStyle(roleElement);
             
-            // Step 1: Type the name
-            nameTyped = new Typed('#typed-name', {
-                strings: ['{{ name }}'],
-                typeSpeed: 65,
-                showCursor: false,
-                loop: false,
-                onComplete: function(self) {
-                    // Step 2: After name is complete, start typing role (faster delay)
-                    setTimeout(() => {
-                        roleTyped = new Typed('#typed-role', {
-                            strings: ['{{ role }}'],
-                            typeSpeed: 75,
-                            showCursor: false,
-                            loop: false,
-                            onComplete: function(self) {
-                                // Step 3: After both complete, wait then start backspacing
-                                setTimeout(() => {
-                                    startBackspacing();
-                                }, 4000); // Wait 2 seconds before backspacing
-                            }
-                        });
-                    }, 300); // Reduced from 800ms to 500ms
-                }
+            const fontProps = ['fontSize', 'lineHeight', 'fontWeight', 'fontFamily', 'fontStyle', 'fontVariant'];
+            
+            fontProps.forEach(prop => {
+                nameCursor.style[prop] = nameStyles[prop];
+                roleCursor.style[prop] = roleStyles[prop];
             });
+            
+            nameCursor.style.setProperty('font-size', nameStyles.fontSize, 'important');
+            roleCursor.style.setProperty('font-size', roleStyles.fontSize, 'important');
         }
         
-        function startBackspacing() {
-            // Step 4: Backspace the role first
-            roleTyped = new Typed('#typed-role', {
-                strings: ['{{ role }}', ''], // From role to empty
-                typeSpeed: 0, // Don't type, just start with the text
-                backSpeed: 45, // Speed of backspacing
-                showCursor: false,
-                loop: false,
-                onComplete: function(self) {
-                    // Step 5: After role is backspaced, backspace the name (faster delay)
-                    setTimeout(() => {
-                        nameTyped = new Typed('#typed-name', {
-                            strings: ['{{ name }}', ''], // From name to empty
-                            typeSpeed: 0, // Don't type, just start with the text
-                            backSpeed: 55, // Slightly slower for name
-                            showCursor: false,
-                            loop: false,
-                            onComplete: function(self) {
-                                // Step 6: Clean up and restart
-                                if (nameTyped) nameTyped.destroy();
-                                if (roleTyped) roleTyped.destroy();
-                                
-                                // Clear elements
-                                nameElement.innerHTML = '';
-                                roleElement.innerHTML = '';
-                                
-                                // Restart the whole cycle (faster restart)
-                                setTimeout(startAnimation, 200); // Reduced from 1000ms to 500ms
-                            }
-                        });
-                    }, 500);
+        // Animation state
+        let animationId = null;
+        const nameText = '{{ name }}';
+        const roleText = '{{ role }}';
+        
+        function customTypingAnimation() {
+            let phase = 'type-name';  // type-name, type-role, pause, backspace-role, backspace-name, restart
+            let nameIndex = 0;
+            let roleIndex = 0;
+            let pauseCounter = 0;
+            
+            function animate() {
+                switch(phase) {
+                    case 'type-name':
+                        if (nameIndex < nameText.length) {
+                            nameElement.textContent = nameText.substring(0, nameIndex + 1);
+                            nameIndex++;
+                            setTimeout(() => animationId = requestAnimationFrame(animate), 70); // Faster: was 100ms
+                        } else {
+                            // Move to role typing after delay
+                            setTimeout(() => {
+                                phase = 'type-role';
+                                animationId = requestAnimationFrame(animate);
+                            }, 250); // Faster: was 400ms
+                        }
+                        break;
+                        
+                    case 'type-role':
+                        if (roleIndex < roleText.length) {
+                            roleElement.textContent = roleText.substring(0, roleIndex + 1);
+                            roleIndex++;
+                            setTimeout(() => animationId = requestAnimationFrame(animate), 60); // Faster: was 90ms
+                        } else {
+                            // Move to pause phase
+                            phase = 'pause';
+                            pauseCounter = 0;
+                            setTimeout(() => animationId = requestAnimationFrame(animate), 1500); // Faster: was 2000ms
+                        }
+                        break;
+                        
+                    case 'pause':
+                        // Short pause before backspacing
+                        phase = 'backspace-role';
+                        animationId = requestAnimationFrame(animate);
+                        break;
+                        
+                    case 'backspace-role':
+                        if (roleIndex > 0) {
+                            roleIndex--;
+                            roleElement.textContent = roleText.substring(0, roleIndex);
+                            setTimeout(() => animationId = requestAnimationFrame(animate), 30); // Faster: was 50ms
+                        } else {
+                            // Move to backspace name after delay
+                            setTimeout(() => {
+                                phase = 'backspace-name';
+                                animationId = requestAnimationFrame(animate);
+                            }, 60); // Faster: was 100ms
+                        }
+                        break;
+                        
+                    case 'backspace-name':
+                        if (nameIndex > 0) {
+                            nameIndex--;
+                            nameElement.textContent = nameText.substring(0, nameIndex);
+                            setTimeout(() => animationId = requestAnimationFrame(animate), 40); // Faster: was 60ms
+                        } else {
+                            // Reset and restart
+                            setTimeout(() => {
+                                phase = 'type-name';
+                                nameIndex = 0;
+                                roleIndex = 0;
+                                nameElement.textContent = '';
+                                roleElement.textContent = '';
+                                animationId = requestAnimationFrame(animate);
+                            }, 300); // Faster: was 500ms
+                        }
+                        break;
                 }
-            });
+            }
+            
+            matchCursorSizes();
+            animationId = requestAnimationFrame(animate);
         }
         
         // Start the animation
-        startAnimation();
+        customTypingAnimation();
+        
+        // Cleanup function if needed
+        window.addEventListener('beforeunload', function() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        });
     }
 
     // Dynamic navigation highlighting - only on main page
