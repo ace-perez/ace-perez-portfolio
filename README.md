@@ -8,7 +8,6 @@ This repository contains the source code for my personal portfolio website. It i
 
 *   **Dynamic Content**: Easily update work experience, education, and hobbies by modifying data structures in the main application file.
 *   **Interactive Travel Map**: A world map powered by Leaflet.js that displays markers for all the places I have visited.
-*   **Timeline API**: A RESTful API that allows visitors to post, view, and delete messages on a public timeline.
 *   **Responsive Design**: A clean, sidebar-based navigation that adapts to different screen sizes.
 *   **Containerized**: Fully containerized using Docker and Docker Compose for both development and production environments.
 *   **Automated Deployment**: CI/CD pipeline with GitHub Actions to automatically run tests and deploy the latest version to a live server.
@@ -51,16 +50,7 @@ This repository contains the source code for my personal portfolio website. It i
     ```
 
 2.  **Create an environment file:**
-    Create a `.env` file in the root directory and add the following variables. These are used by the local `docker-compose.yml` to set up the database.
-
-    ```env
-    # Database Configuration
-    MYSQL_DATABASE=myportfolio_db
-    MYSQL_USER=user
-    MYSQL_PASSWORD=password
-    MYSQL_ROOT_PASSWORD=root_password
-    MYSQL_HOST=mysql
-    ```
+    Create a `.env` file in the root directory and add the appropriate variable database configurations. These are used by the local `docker-compose.yml` to set up the database.
 
 3.  **Build and run the containers:**
     ```bash
